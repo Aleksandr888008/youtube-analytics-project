@@ -26,7 +26,7 @@ class Video:
 
         # Заполняем атрибуты экземпляра данными о канале
         self.video_title = response['items'][0]['snippet']['title']
-        self.video_url = f"https://www.youtube.com/channel/{self.video_id}"
+        self.video_url = f"https://www.youtube.com/video/{self.video_id}"
         self.view_count = response['items'][0]['statistics']['viewCount']
         self.like_count = response['items'][0]['statistics']['likeCount']
 
