@@ -13,15 +13,15 @@ class Video:
     def __init__(self, video_id):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.video_id = video_id
-        self.video_title = ""
-        self.video_url = ""
+        self.video_title = ''
+        self.video_url = ''
         self.view_count = 0
         self.like_count = 0
 
     def get_service_video(self):
         """Заполняет атрибуты экземпляра данными из YouTube API."""
 
-        response = youtube.videos().list(part='snippet, statistics, contentDetails,topicDetails',
+        response = youtube.videos().list(part='snippet, statistics',
                                          id=self.video_id).execute()
 
         # Заполняем атрибуты экземпляра данными о канале
@@ -30,12 +30,20 @@ class Video:
         self.view_count = response['items'][0]['statistics']['viewCount']
         self.like_count = response['items'][0]['statistics']['likeCount']
 
+    def __str__(self):
+        """Возвращает строку с названием видео."""
+        response = youtube.videos().list(part='snippet, statistics',
+                                         id=self.video_id).execute()
+        video_title = response['items'][0]['snippet']['title']
+        return f'{video_title}'
+
 
 class PLVideo(Video):
 
     def __init__(self, video_id, playlist_id):
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         super().__init__(video_id)
+        self.video_id = video_id
         self.video_title = ""
         self.video_url = ""
         self.view_count = 0
