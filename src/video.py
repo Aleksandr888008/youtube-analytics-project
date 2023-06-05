@@ -21,19 +21,19 @@ class Video:
     def get_service_video(self):
         """Заполняет атрибуты экземпляра данными из YouTube API."""
         try:
-            checker_url = "https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
-            video_url = checker_url + self.video_id
-
-            request = requests.get(video_url)
-
-            if request.status_code != 200:
-                raise Exception("Такого видео нет")
-        except Exception:
-            raise Exception
-
-        else:
             response = youtube.videos().list(part='snippet, statistics',
                                              id=self.video_id).execute()
+            # checker_url = "https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="
+            # video_url = checker_url + self.video_id
+            #
+            # request = requests.get(video_url)
+            #
+            # if request.status_code != 200:
+        except IndexError:
+            raise IndexError("Видео с таким 'video id' нет")
+
+        else:
+
 
             # Заполняем атрибуты экземпляра данными о канале
             self.video_title = response['items'][0]['snippet']['title']
